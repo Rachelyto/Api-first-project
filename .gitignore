@@ -1,0 +1,6 @@
+# .NET Core / Visual Studio junk files
+[Oo]bj/
+[Bb]in/
+.vs/
+*.user
+*.suo

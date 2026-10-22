@@ -1,0 +1,53 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <style>
+        body{
+            background-color:aliceblue;
+            display:grid;
+            place-content:center;
+        }
+        main {
+            background-color: white;
+            width:280px;
+            height:90vh;
+            display:flex;
+            flex-direction:column;
+            justify-content:space-around;
+            
+
+        }
+        #welcome {
+            text-align: center;
+            font-size: 30px;
+            color: cornflowerblue;
+        }
+        
+        label,input,button{
+            margin: 8px;
+            margin-left:17px;
+            padding:4px;
+        }
+
+    </style>
+    <script defer src="Uptate.js"></script>
+</head>
+<body>
+    <main>
+        <div id="welcome">✔️ברוכים הבאים! התחברת בהצלחה</div>
+        <div id="form">
+            <label for="Email"> email</label><br />
+            <input type="email" id="Email" /><br />
+            <label for="Password"> password</label><br />
+            <input required type="password" id="Password" /><br />
+            <label for="FirstName"> first name</label><br />
+            <input required id="FirstName" /><br />
+            <label for="LastName"> last name</label><br />
+            <input required id="LastName" /><br />
+            <button id="signUpBtn" onclick="update()">ok</button>
+        </div>
+    </main>
+</body>
+</html>
