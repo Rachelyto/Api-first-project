@@ -2,6 +2,8 @@
 
 namespace webAPI
 {
+    //A clearer name is LoginUser, and Email and Password are enough as property names.
+    //LogInId isn't used for login: if you don't need it, delete it
     public class UserLog
     {
         [EmailAddress]
