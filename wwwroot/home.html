@@ -4,34 +4,36 @@
     <meta charset="utf-8" />
     <title></title>
     <style>
-        h1{
-            color:pink;
-            font-size:70px;
+        h1 {
+            color: pink;
+            font-size: 70px;
         }
     </style>
     <script defer src="home.js"></script>
 </head>
-    
-<div class="form">
-    <h1>sign up:</h1>
-    <label for="Email"> email</label><br />
-    <input type="email" id="Email" /><br />
-    <label for="Password"> password</label><br />
-    <input required type="password" id="Password" /><br />
-    <label for="FirstName"> first name</label><br />
-    <input required id="FirstName" /><br />
-    <label for="LastName"> last name</label><br />
-    <input required id="LastName" /><br />
-    <button id="signUpBtn" onclick="signUp()">ok</button>
+<body>
+    <div class="form">
+        <h1>sign up:</h1>
+        <label for="Email"> email</label><br />
+        <input type="email" id="Email" /><br />
+        <label for="Password"> password</label><br />
+        <input required type="password" id="Password" /><br />
+        <label for="FirstName"> first name</label><br />
+        <input required id="FirstName" /><br />
+        <label for="LastName"> last name</label><br />
+        <input required id="LastName" /><br />
+        <button onclick="checkPass()">check Password</button>
+        <progress id="passwordProgress" value="0" max="4" style="display:none"></progress>
+        <button id="signUpBtn" onclick="signUp()">ok</button>
 
-    <h1>sign in:</h1>
-    <label for="LogInEmail">email</label><br />
-    <input id="LogInEmail" /><br />
-    <label for="LogInPassword"> password</label><br />
-    <input required type="password" id="LogInPassword" /><br />
-    <button id="signInBtn" onclick="SignIn()">ok</button>
+        <h1>sign in:</h1>
+        <label for="LogInEmail">email</label><br />
+        <input id="LogInEmail" /><br />
+        <label for="LogInPassword"> password</label><br />
+        <input required type="password" id="LogInPassword" /><br />
+        <button id="signInBtn" onclick="SignIn()">ok</button>
 
-</div>
+    </div>
 
 
 </body>

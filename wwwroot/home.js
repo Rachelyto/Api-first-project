@@ -11,6 +11,12 @@
         lastName
     };
     try {
+        await (checkPass());
+        const progress = document.querySelector("#passwordProgress").value;
+
+        if (progress < 3) {
+            return;
+        }
         const response = await fetch('api/users', {
             method: 'POST',
             headers: {
@@ -25,6 +31,7 @@
             document.getElementById('Password').value = '';
             document.getElementById('LastName').value = '';
             document.getElementById('FirstName').value = '';
+            document.querySelector("#passwordProgress").style.display = "none";
             alert("The user has been registered successfully!");
         }
         else
@@ -71,3 +78,35 @@ const SignIn = async () => {
     }
 }
 
+const checkPass = async () => {
+    const password = document.querySelector("#Password").value
+    
+    try {
+        if (password == '') {
+            throw ("enter password");
+        }
+        const response = await fetch('api/Passwords', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(password)
+        });
+
+        if (response.ok) {
+            const score = await response.json();
+            const prog = document.querySelector("#passwordProgress")
+            prog.style.display = "block"
+            prog.value = score;
+            if (score < 3) {
+                throw ("not a strong password");
+            }
+        }
+        else
+            throw "Network error";
+    }
+    catch (e) {
+        alert(e);
+    }
+    
+}
