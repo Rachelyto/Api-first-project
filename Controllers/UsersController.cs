@@ -9,6 +9,8 @@ namespace webAPI.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
+        //count isn't used: if you don't need it, delete it.
+        //"Usersdata.txt" is written 5 times in this class: a static readonly string filePath field keeps it in one place
         private static int count = 0;
         // GET: api/<UsersController>
         [HttpGet]
@@ -19,6 +21,7 @@ namespace webAPI.Controllers
 
         // GET api/<UsersController>/5
         [HttpGet("{id}")]
+        //Why isn't it implemented? It should read the file and return the user with this id (or NotFound / NoContent)
         public string Get(int id)
         {
             return "value";
@@ -51,6 +54,7 @@ namespace webAPI.Controllers
                     if (user.Email == loginUser.LogInEmail && user.Password ==
                     loginUser.LogInPassword)
                         //RETURN USER TO CLIENT;
+                        //Login doesn't create a new user, so return Ok(user) here (and the method returns ActionResult<User>, not ActionResult<UserLog>)
                         return CreatedAtAction(nameof(Get), new { id = user.Id }, user);        
                 }
             }
@@ -62,6 +66,7 @@ namespace webAPI.Controllers
 
         // PUT api/<UsersController>/5
         [HttpPut("{id}")]
+        //The assignment asks PUT to return Ok(): change void to IActionResult and return Ok() at the end
         public void Put(int id, [FromBody] User userToUpdate)
         {
             string textToReplace = string.Empty;
@@ -74,11 +79,17 @@ namespace webAPI.Controllers
                     User user =
                     JsonSerializer.Deserialize<User>(currentUserInFile);
                     if (user.Id == id)
+                    {
                         textToReplace = currentUserInFile;
+                        //fix: Found- break
+                        break;
+                    }
                 }
             }
             if (textToReplace != string.Empty)
             {
+                //fix: Keep the id, otherwise the updated user is saved without it
+                userToUpdate.Id = id;
                 string text = System.IO.File.ReadAllText("Usersdata.txt");
                 text = text.Replace(textToReplace,
                 JsonSerializer.Serialize(userToUpdate));
