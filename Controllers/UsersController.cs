@@ -9,7 +9,7 @@ namespace webAPI.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
-        private static int count = 0;
+        static readonly string filePath = "Usersdata.txt";
         // GET: api/<UsersController>
         [HttpGet]
         public IEnumerable<string> Get()
@@ -19,19 +19,30 @@ namespace webAPI.Controllers
 
         // GET api/<UsersController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public IActionResult Get(int id)
         {
-            return "value";
+            using (StreamReader reader = System.IO.File.OpenText(filePath))
+            {
+                string? currentUserInFile;
+                while ((currentUserInFile = reader.ReadLine()) != null)
+                {
+                    User user =
+                    JsonSerializer.Deserialize<User>(currentUserInFile);
+                    if (user.Id == id)
+                        return Ok(user); 
+                }
+            }
+            return NoContent();
         }
 
         // POST api/<UsersController>
         [HttpPost]
         public ActionResult<User> Post([FromBody] User user)
         {
-            int numberOfUsers = System.IO.File.ReadLines("Usersdata.txt").Count();
+            int numberOfUsers = System.IO.File.ReadLines(filePath).Count();
             user.Id = numberOfUsers + 1;
             string userJson = JsonSerializer.Serialize(user);
-            System.IO.File.AppendAllText("Usersdata.txt", userJson +
+            System.IO.File.AppendAllText(filePath, userJson +
             Environment.NewLine);
             return CreatedAtAction(nameof(Get), new { id = user.Id },
             user);
@@ -39,19 +50,19 @@ namespace webAPI.Controllers
         }
         // POST api/<UsersController>
         [HttpPost("login")]
-        public ActionResult<UserLog> Post([FromBody] UserLog loginUser)
+        public ActionResult<User> Post([FromBody] LoginUser loginUser)
         {
-            using (StreamReader reader = System.IO.File.OpenText("Usersdata.txt"))
+            using (StreamReader reader = System.IO.File.OpenText(filePath))
             {
                 string? currentUserInFile;
                 while ((currentUserInFile = reader.ReadLine()) != null)
                 {
                     User user =
                     JsonSerializer.Deserialize<User>(currentUserInFile);
-                    if (user.Email == loginUser.LogInEmail && user.Password ==
-                    loginUser.LogInPassword)
+                    if (user.Email == loginUser.Email && user.Password ==
+                    loginUser.Password)
                         //RETURN USER TO CLIENT;
-                        return CreatedAtAction(nameof(Get), new { id = user.Id }, user);        
+                        return Ok(user);        
                 }
             }
             return NoContent();
@@ -62,11 +73,11 @@ namespace webAPI.Controllers
 
         // PUT api/<UsersController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] User userToUpdate)
+        public IActionResult Put(int id, [FromBody] User userToUpdate)
         {
             string textToReplace = string.Empty;
             using (StreamReader reader =
-            System.IO.File.OpenText("Usersdata.txt"))
+            System.IO.File.OpenText(filePath))
             {
                 string currentUserInFile;
                 while ((currentUserInFile = reader.ReadLine()) != null)
@@ -74,16 +85,21 @@ namespace webAPI.Controllers
                     User user =
                     JsonSerializer.Deserialize<User>(currentUserInFile);
                     if (user.Id == id)
+                    {
                         textToReplace = currentUserInFile;
+                        break;
+                    }
                 }
             }
             if (textToReplace != string.Empty)
             {
-                string text = System.IO.File.ReadAllText("Usersdata.txt");
+                userToUpdate.Id = id;
+                string text = System.IO.File.ReadAllText(filePath);
                 text = text.Replace(textToReplace,
                 JsonSerializer.Serialize(userToUpdate));
-                System.IO.File.WriteAllText("Usersdata.txt", text);
+                System.IO.File.WriteAllText(filePath, text);
             }
+            return Ok();
         }
 
         // DELETE api/<UsersController>/5
