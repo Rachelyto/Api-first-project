@@ -80,12 +80,12 @@ const SignIn = async () => {
 
 const checkPass = async () => {
     const password = document.querySelector("#Password").value
-    
+
     try {
         if (password == '') {
             throw ("enter password");
         }
-        const response = await fetch('api/Passwords', {
+        const response = await fetch('api/Users/checkPassword', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -108,5 +108,5 @@ const checkPass = async () => {
     catch (e) {
         alert(e);
     }
-    
+
 }
