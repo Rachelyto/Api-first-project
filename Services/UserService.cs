@@ -4,9 +4,13 @@ using Zxcvbn;
 
 namespace Service
 {
-    public class UserService
+    public class UserService : IUserService
     {
-        UserRepository repository = new UserRepository();
+        private readonly IUserRepository repository;
+        public UserService(IUserRepository repository)
+        {
+            this.repository = repository;
+        }
         public User GetUserById(int id)
         {
             return repository.GetUserById(id);
@@ -14,10 +18,10 @@ namespace Service
 
         public User AddUser(User user)
         {
-            if(ValidatePassword(user.Password)>2)
+            if (ValidatePassword(user.Password) > 2)
                 return repository.AddUser(user);
             return null;
-        } 
+        }
 
         public User Login(LoginUser loginUser)
         {

@@ -3,7 +3,7 @@ using System.Text.Json;
 
 namespace Repository
 {
-    public class UserRepository
+    public class UserRepository : IUserRepository
     {
         static readonly string filePath = "..\\repository\\UsersData.txt";
         public User GetUserById(int id)
@@ -49,7 +49,7 @@ namespace Repository
 
 
         }
-        public User UpdateUser(int id,User userToUpdate)
+        public User UpdateUser(int id, User userToUpdate)
         {
             string textToReplace = string.Empty;
             using (StreamReader reader =
