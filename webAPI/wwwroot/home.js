@@ -44,6 +44,7 @@
 
     
 }
+//In JavaScript, function names are camelCase: signIn
 const SignIn = async () => {
     const Email = document.querySelector("#LogInEmail").value
     const Password = document.querySelector("#LogInPassword").value

@@ -32,6 +32,7 @@ namespace webAPI.Controllers
             return Ok(user);
         }
         [HttpPost("checkPassword")]
+        //In C#, method names are PascalCase: PasswordCheck
         public int passwordCheck([FromBody] string password)
         {
             return userService.ValidatePassword(password);
