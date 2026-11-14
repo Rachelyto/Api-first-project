@@ -26,6 +26,7 @@ namespace Service
         public User Login(LoginUser loginUser)
         {
             User user = repository.GetUserByEmail(loginUser);
+            //What happens if no user has this email? user is null here, so user.Password fails: how could you check for null first?
             if (user.Password == loginUser.Password)
             {
                 return user;
