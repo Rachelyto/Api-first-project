@@ -25,9 +25,9 @@ namespace webAPI.Controllers
 
         // GET api/<UsersController>/5
         [HttpGet("{id}")]
-        public IActionResult Get(int id)
+        public async Task<IActionResult> Get(int id)
         {
-            User user = userService.GetUserById(id);
+            User user =await userService.GetUserById(id);
             if (user == null) return NoContent();
             return Ok(user);
         }
@@ -39,18 +39,18 @@ namespace webAPI.Controllers
 
         // POST api/<UsersController>
         [HttpPost]
-        public ActionResult<User> Post([FromBody] User user)
+        public async Task<ActionResult<User>> Post([FromBody] User user)
         {
-            User added = userService.AddUser(user);
+            User added =await userService.AddUser(user);
             if (added == null) return BadRequest();
             return CreatedAtAction(nameof(Get), new { id = added.Id },
             added);
         }
         // POST api/<UsersController>
         [HttpPost("login")]
-        public ActionResult<User> Post([FromBody] LoginUser loginUser)
+        public async Task<ActionResult<User>> Post([FromBody] LoginUser loginUser)
         {
-            User login = userService.Login(loginUser);
+            User login =await userService.Login(loginUser);
             if(login == null) return NoContent();              
             return Ok(login);
         }
@@ -58,9 +58,9 @@ namespace webAPI.Controllers
 
         // PUT api/<UsersController>/5
         [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] User userToUpdate)
+        public async Task<IActionResult> Put(int id, [FromBody] User userToUpdate)
         {
-            User update=userService.UpdateUser(id, userToUpdate);
+            User update=await userService.UpdateUser(id, userToUpdate);
             if (update == null) return BadRequest();
             return Ok(update);
         }

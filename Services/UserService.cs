@@ -11,32 +11,32 @@ namespace Service
         {
             this.repository = repository;
         }
-        public User GetUserById(int id)
+        public async Task<User> GetUserById(int id)
         {
-            return repository.GetUserById(id);
+            return await repository.GetUserById(id);
         }
 
-        public User AddUser(User user)
+        public async Task<User> AddUser(User user)
         {
             if (ValidatePassword(user.Password) > 2)
-                return repository.AddUser(user);
+                return await repository.AddUser(user);
             return null;
         }
 
-        public User Login(LoginUser loginUser)
+        public async Task<User> Login(LoginUser loginUser)
         {
-            User user = repository.GetUserByEmail(loginUser);
+            User user =await repository.GetUserByEmailAndPassword(loginUser);
             if (user.Password == loginUser.Password)
             {
                 return user;
             }
             return null;
         }
-        public User UpdateUser(int id, User user)
+        public async Task<User> UpdateUser(int id, User user)
         {
             if (ValidatePassword(user.Password) < 2)
                 return null;
-            return repository.UpdateUser(id, user);
+            return await repository.UpdateUser(id, user);
         }
 
         public int ValidatePassword(string password)
