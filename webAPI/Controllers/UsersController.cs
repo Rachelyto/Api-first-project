@@ -1,6 +1,7 @@
 ﻿using Entity;
 using Microsoft.AspNetCore.Mvc;
 using Service;
+//This using isn't used in this file: you can remove it
 using System.Text.Json;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -32,6 +33,7 @@ namespace webAPI.Controllers
             return Ok(user);
         }
         [HttpPost("checkPassword")]
+        //In C#, method names are written in PascalCase: PasswordCheck
         public int passwordCheck([FromBody] string password)
         {
             return userService.ValidatePassword(password);
