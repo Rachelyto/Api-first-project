@@ -26,6 +26,7 @@ namespace Service
         public async Task<User> Login(LoginUser loginUser)
         {
             User user =await repository.GetUserByEmailAndPassword(loginUser);
+            //What happens here when no user matches the email and password (user is null)?
             if (user.Password == loginUser.Password)
             {
                 return user;
@@ -34,6 +35,7 @@ namespace Service
         }
         public async Task<User> UpdateUser(int id, User user)
         {
+            //Score 2 passes this check (< 2), but the assignment asks weak passwords (score below 3) to return 400. What should the limit be?
             if (ValidatePassword(user.Password) < 2)
                 return null;
             return await repository.UpdateUser(id, user);

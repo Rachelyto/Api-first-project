@@ -44,7 +44,9 @@
 
     
 }
+//In JavaScript, function names are written in camelCase: signIn
 const SignIn = async () => {
+    //In JavaScript, local variables are written in camelCase: email
     const Email = document.querySelector("#LogInEmail").value
     const Password = document.querySelector("#LogInPassword").value
     const userLog = {
