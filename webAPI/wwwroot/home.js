@@ -44,12 +44,12 @@
 
     
 }
-const SignIn = async () => {
-    const Email = document.querySelector("#LogInEmail").value
-    const Password = document.querySelector("#LogInPassword").value
+const signIn = async () => {
+    const email = document.querySelector("#LogInEmail").value
+    const password = document.querySelector("#LogInPassword").value
     const userLog = {
-        Email,
-        Password
+        email,
+        password
     };
     try {
         const response = await fetch('api/Users/login', {

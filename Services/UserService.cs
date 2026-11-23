@@ -26,15 +26,13 @@ namespace Service
         public async Task<User> Login(LoginUser loginUser)
         {
             User user =await repository.GetUserByEmailAndPassword(loginUser);
-            if (user.Password == loginUser.Password)
-            {
-                return user;
-            }
-            return null;
+            if (user == null)
+                return null;
+            return user;      
         }
         public async Task<User> UpdateUser(int id, User user)
         {
-            if (ValidatePassword(user.Password) < 2)
+            if (ValidatePassword(user.Password) < 3)
                 return null;
             return await repository.UpdateUser(id, user);
         }

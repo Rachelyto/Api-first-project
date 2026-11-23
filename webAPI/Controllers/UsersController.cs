@@ -32,7 +32,7 @@ namespace webAPI.Controllers
             return Ok(user);
         }
         [HttpPost("checkPassword")]
-        public int passwordCheck([FromBody] string password)
+        public int PasswordCheck([FromBody] string password)
         {
             return userService.ValidatePassword(password);
         }
