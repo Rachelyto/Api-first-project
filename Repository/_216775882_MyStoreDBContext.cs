@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using Entity;
 using Microsoft.EntityFrameworkCore;
-namespace UserRepository;
+namespace Repository;
 
 public partial class _216775882_MyStoreDBContext : DbContext
 {
